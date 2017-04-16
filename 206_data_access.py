@@ -110,7 +110,7 @@ cur.execute('DROP TABLE IF EXISTS FINAL_PROJECT')
 #Movies table
 table_spec = 'CREATE TABLE IF NOT EXISTS '
 table_spec += 'Movies (movie_id TEXT PRIMARY KEY, ' #The movie ID will be the primary key
-table_spec += 'title TEXT, director TEXT, num_languages INTEGER, rating INTEGER, top_actor TEXT)'
+table_spec += 'title TEXT, director TEXT, num_languages INTEGER, rating INTEGER, box_office TEXT, top_actor TEXT)'
 cur.execute(table_spec)
 
 #Tweets table
@@ -125,7 +125,7 @@ table_spec += 'Users (user_id TEXT PRIMARY KEY, '
 table_spec += 'screen_name TEXT, user_favorites INTEGER)'
 cur.execute(table_spec)
 
-statement = 'INSERT OR IGNORE INTO Movies VALUES (?, ?, ?, ?, ?, ?)'
+statement = 'INSERT OR IGNORE INTO Movies VALUES (?, ?, ?, ?, ?, ?, ?)'
 statement1 = 'INSERT OR IGNORE INTO Tweets VALUES (?, ?, ?, ?, ?)'
 statement2 = 'INSERT OR IGNORE INTO Users VALUES (?, ?, ?)'
 
@@ -138,6 +138,7 @@ class Movie(): #This is my creation of the class
 		self.title = movie_dict['Title']
 		self.year = movie_dict["Year"]
 		self.movie_id = movie_dict['imdbID']
+		self.box_office = movie_dict["BoxOffice"]
 		self.director = movie_dict['Director']
 		self.languages = len(movie_dict["Language"].split())
 		self.rating = movie_dict["imdbRating"]
@@ -151,7 +152,7 @@ class Movie(): #This is my creation of the class
 		actors = Movie.get_actors(self)
 		lst = actors.split()
 		main_actor = lst[0] + lst[1]
-		t = self.movie_id, self.title, self.director, self.languages, self.rating, main_actor
+		t = self.movie_id, self.title, self.director, self.languages, self.rating, self.box_office, main_actor
 		return t
 
 	
@@ -171,8 +172,6 @@ movie_insts = []
 for movie in movies_dicts:
 	movie_insts.append(Movie(movie))
 
-for m in movie_insts:
-	print (m.languages)
 # This is where I will be inputting the data about each movie into the Movies data table. 
 for m in movie_insts:
 	cur.execute(statement, m.get_movie_table())
@@ -234,7 +233,7 @@ for tweets in hashtag_tweets:
 conn.commit()
 
 
-
+#
 
 
 
