@@ -156,7 +156,7 @@ class Movie(): #This is my creation of the class
 		return t
 
 	
-	def __str__(self): # Here is my string method that returns a string about the movie. 
+	def __str__(self): # Here is my string method that returns a string about the movie. This will focus on certain aspects fo the movie that I think are important, such as the title, who it was directed by, notable actors, and rating.  
 		return self.title + " Was directed by " + self.director  +" with notable actors being " + self.get_actors() + ". This movie had an IMDM rating of " + self.rating
 
 # This is where I create my list of movies I will find data on, stored in variable movies
@@ -199,6 +199,7 @@ class Twitter_search():
 
 # This is where I am defining my hashtags that I will collect data on, hashtags to be stored in variable hashtags
 hashtags = ['#beautyandthebeast', '#thebossbaby', '#Logan']
+
 #This is where I will pull data from twitter and store that data about each hashtag and tweets associated with it in variable hashtag_tweets
 hashtag_tweets = []
 for tag in hashtags:
@@ -258,12 +259,36 @@ for r in result.fetchall():
 	most_popular_movies_tweeters.append(r)
 
 
+#Use dictionary accumulation in order to calculate the total number of retweets each of the associated movies have had. 
+# Each kep should be the associated movie and each value should add all of the retweets together. 
+
+
+# Then sort a list of the dictionary keys based on the number of total number of retweets for each movie, and store the top movie and its number of retweets in a varaiable called top_movie_retweets.
+
+
+
+# Pull the movie title, rating, and box office performance for each movie with a query statment. Save this information in a list named movie_performances
+
+
+# Use a query to pull the screen_name and user favorites from the Users table for users that have over 50 favorites and save the resulting tuples in a list named top_users 
+
+
+
+# Use set comprehension on the top_users to find the users that favorite the most tweets and sort to have only the top 5 users, in essence people that use Twitter a lot and save that in varaible top_5 users. 
+
+
+
  
 
 
 
 
 
+
+
+# Write file named final_project_summary that will have all your findings in it. 
+
+#file_summary = open("final_project_summary.txt", 'w')
 
 
 
