@@ -151,7 +151,7 @@ class Movie(): #This is my creation of the class
 	def get_movie_table(self):
 		actors = Movie.get_actors(self)
 		lst = actors.split()
-		main_actor = lst[0] + lst[1]
+		main_actor = lst[0] + " " + lst[1]
 		t = self.movie_id, self.title, self.director, self.languages, self.rating, self.box_office, main_actor
 		return t
 
@@ -186,11 +186,16 @@ class Twitter_search():
 		self.userid = tweet['user']['id_str']
 		self.retweets = tweet['retweet_count']
 		self.associated_movie = movie
+		self.screen_name = tweet['user']['screen_name']
+		self.favorites = tweet['user']['favourites_count']
 
 	# This method, get_twitter_table will return the tuple of information about each tweet that I can then load into the data table. I figured that I can reutrn the data and then inout it right into the table later on in the code. 
 	def get_twitter_table(self):
 		t1 = self.id, self.text, self.userid, self.associated_movie, self.retweets
 		return t1
+	def get_users_table(self):
+		t2 = self.userid, self.screen_name, self.favorites
+		return t2
 
 # This is where I am defining my hashtags that I will collect data on, hashtags to be stored in variable hashtags
 hashtags = ['#beautyandthebeast', '#thebossbaby', '#Logan']
@@ -208,7 +213,7 @@ for i in range(len(hashtag_tweets)):
 # This is where I will be loading data about each movies tweets into the Tweets table. 
 for inst in twitter_insts:
 	cur.execute(statement1, inst.get_twitter_table())
-
+	cur.execute(statement2, inst.get_users_table())
 
 
 # This is where I will pull data about users for the User table. 
@@ -229,11 +234,31 @@ for tweets in hashtag_tweets:
 			cur.execute(statement2,t2)
 
 
- #Committing all of the statements to the data tables
+# Committing all of the statements to the data tables
 conn.commit()
 
 
-#
+# Query statements:
+
+
+# Pull all of the data from the Tweets table for tweets that have over 50 retweets, and save that data in list with variable name being more_than_50_rts
+statement = 'SELECT * FROM Tweets WHERE num_retweets > 50'
+result = cur.execute(statement)
+more_than_50_rts = []
+for r in result.fetchall():
+	more_than_50_rts.append(r)
+
+
+
+# Make an inner join query statement to find the screen name, associated movie, user favorites and their number of retweets on their tweet from the inner join of Tweets and Users tables where the number of rewtweets and user favorites are both greater than 25, then save that resulting list in a variable most_popular_movies_tweeters
+statement = 'SELECT screen_name, associated_movie, user_favorites, num_retweets FROM Tweets INNER JOIN Users ON Tweets.user_id=Users.user_id WHERE num_retweets >25 AND user_favorites > 25'
+result = cur.execute(statement)
+most_popular_movies_tweeters = []
+for r in result.fetchall():
+	most_popular_movies_tweeters.append(r)
+
+
+ 
 
 
 
@@ -249,7 +274,6 @@ conn.commit()
 ### IMPORTANT: MAKE SURE TO CLOSE YOUR DATABASE CONNECTION AT THE END OF THE FILE HERE SO YOU DO NOT LOCK YOUR DATABASE (it's fixable, but it's a pain). ###
 conn.close()
 
-print ("Make sure you make a method in your classes that will return the tuple of data you will then load straight into your data tables.")
 
 
 # Put your tests here, with any edits you now need from when you turned them in with your project plan.
