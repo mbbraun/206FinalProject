@@ -125,6 +125,7 @@ table_spec += 'Users (user_id TEXT PRIMARY KEY, '
 table_spec += 'screen_name TEXT, user_favorites INTEGER)'
 cur.execute(table_spec)
 
+# Here are my three insert statements I will call later in order to input my data into my database. 
 statement = 'INSERT OR IGNORE INTO Movies VALUES (?, ?, ?, ?, ?, ?, ?)'
 statement1 = 'INSERT OR IGNORE INTO Tweets VALUES (?, ?, ?, ?, ?)'
 statement2 = 'INSERT OR IGNORE INTO Users VALUES (?, ?, ?)'
@@ -150,8 +151,8 @@ class Movie(): #This is my creation of the class
 	# This is where I will create my get_movie_table method which will return a tuple of information that can be directly put into the movie data table once this method is called on an instance of a movie. 
 	def get_movie_table(self):
 		actors = Movie.get_actors(self)
-		lst = actors.split()
-		main_actor = lst[0] + " " + lst[1]
+		lst = actors.split(", ")
+		main_actor = lst[0]
 		t = self.movie_id, self.title, self.director, self.languages, self.rating, self.box_office, main_actor
 		return t
 
@@ -277,10 +278,11 @@ for r in result.fetchall():
 # Use set comprehension on the top_users to find the users that favorite the most tweets and sort to have only the top 5 users, in essence people that use Twitter a lot and save that in varaible top_5 users. 
 
 
+# Use dictionary comprehension to merge two dictionaries where the keys will be the movie title and the values will be a list of number of retweets, rating, and box office performance, and save this data in a dictionary titled movie_dict_stats
 
  
 
-
+#List comprehension 
 
 
 
