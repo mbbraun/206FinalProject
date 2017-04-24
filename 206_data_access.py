@@ -287,7 +287,7 @@ print ('**************')
 
 tweeters_str = "\nWhen looking at users who tweeted about certain movies, I looked at what popular users (people who had over 50 user favorites and 50 retweets on their tweet) and what movie they tweeted about. It becomes evident that certain movies attract more attention than others:\n"
 file_summary.write(tweeters_str)
-file_summary.write("The statistics after the username are as follows: (Movie tweeted about, number of user favorites, number of retweets)\n")
+#file_summary.write("The statistics after the username are as follows: (Movie tweeted about, number of user favorites, number of retweets)\n")
 for key in most_popular_movies_tweeters.keys():
 	file_summary.write("\n")
 	file_summary.write("User: " + key + "\n Associated Movie: " +str(most_popular_movies_tweeters[key][0]) + "\n User Favorites: " + str(most_popular_movies_tweeters[key][1]) + "\n Number of Tweet Retweets: " + str(most_popular_movies_tweeters[key][2]))
@@ -354,6 +354,8 @@ elif top_movie_retweets[0] == "The Boss Baby":
 elif top_movie_retweets[0] == "Logan":
 	file_summary.write(movie_insts[2].__str__())
 
+file_summary.write("\n\n\n\n")
+
 file_summary.close()
 # Write file named final_project_summary that will have all your findings in it. 
 
@@ -388,10 +390,6 @@ class Task1(unittest.TestCase):
 	def test_get_user_tweets(self):
 		res = get_twitter_data("#Logan")
 		self.assertEqual(type(res), type(['hi', 5]))
-	def test_movie_string(self):
-		mov = get_movie_data("Logan")
-		i = Movie(mov)
-		self.assertEqual(type(i.__str__()), str)
 	def test_movie_title(self):
 		mov = get_movie_data("Logan")
 		i = Movie(mov)
