@@ -239,7 +239,7 @@ conn.commit()
 file_summary = open("final_project_summary.txt", 'w')
 file_summary.write("Michael Braunstein\n")
 file_summary.write("SI 206 Final Project Output Summary Page\n\n")
-file_summary.write("For this project, I performed a lot of data analytics on current movies and how much people were talking about each respective movie on Twitter. This summary page should give you a better idea of what movie you should go see based on these statistics. \n\nThe movies I decided to look at were Beauty and the Beast, The Boss Baby, and Logan. ")
+file_summary.write("For this project, I performed a lot of data analytics on current movies and how much people were talking about each respective movie on Twitter. This summary page should give you a better idea of what movie you should go see based on these statistics. \n\nThe movies I decided to look at were Beauty and the Beast, The Boss Baby, and Logan. I then found tweets about each movie by searching for a hashtag of the movie title.")
 
 # Query statements:
 
@@ -282,8 +282,8 @@ most_popular_movies_tweeters = {r[0]:(r[1],r[2],r[3]) for r in result.fetchall()
 # print (sorted_most_popular_movies_tweeters)
 # for r in result.fetchall():
 # 	most_popular_movies_tweeters.append(r)
-print (most_popular_movies_tweeters)
-print ('**************')
+# print (most_popular_movies_tweeters)
+# print ('**************')
 
 tweeters_str = "\nWhen looking at users who tweeted about certain movies, I looked at what popular users (people who had over 50 user favorites and 50 retweets on their tweet) and what movie they tweeted about. It becomes evident that certain movies attract more attention than others:\n"
 file_summary.write(tweeters_str)
@@ -292,6 +292,17 @@ for key in most_popular_movies_tweeters.keys():
 	file_summary.write("\n")
 	file_summary.write("User: " + key + "\n Associated Movie: " +str(most_popular_movies_tweeters[key][0]) + "\n User Favorites: " + str(most_popular_movies_tweeters[key][1]) + "\n Number of Tweet Retweets: " + str(most_popular_movies_tweeters[key][2]))
 	file_summary.write("\n")
+
+#for key in most_popular_movies_tweeters.keys():
+
+#Ecount = collections.Counter(most_popular_movies_tweeters[most_popular_movies_tweeters.keys()][0])
+counted_movies = [most_popular_movies_tweeters[key][0] for key in most_popular_movies_tweeters.keys()]
+print (counted_movies)
+count =collections.Counter(counted_movies).most_common()
+print (count[0])
+file_summary.write("\n After looking at the most popular tweets about these movies, I wanted to see out of these movies, which one was tweeted about the most (out of the popular tweets)")
+file_summary.write("\n" + count[0][0] + " had the most popular tweets with " + str(count[0][1]) + " tweets."  )
+
 
 # Use dictionary accumulation in order to calculate the total number of retweets each of the associated movies have had. 
 # Each key should be the associated movie and each value should add all of the retweets together. 
@@ -312,7 +323,7 @@ sorted_movie_retweets = sorted(movie_retweets, key = lambda x: movie_retweets[x]
 #print (sorted_movie_retweets)
 top_movie_retweets = [sorted_movie_retweets[0], movie_retweets[sorted_movie_retweets[0]]]
 file_summary.write("\nThe most tweeted about movie: " +str(top_movie_retweets[0]) + " with " +str(top_movie_retweets[1]) + " retweets!\n")
-print (top_movie_retweets)
+# print (top_movie_retweets)
 
 
 # Pull the movie title, rating, and box office performance for each movie with a query statment. Save this information in a list named movie_performances.
@@ -343,7 +354,7 @@ file_summary.write("\nFrom these movies, the main actors were:\n")
 for actor in movie_actors:
 	file_summary.write(actor)
 	file_summary.write("\n")
-print (movie_actors)
+# print (movie_actors)
 
 
 file_summary.write("\n\nFrom all this data, the movie I would recommend you see is: " + top_movie_retweets[0] + "\n")
