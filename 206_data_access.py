@@ -295,11 +295,10 @@ for key in most_popular_movies_tweeters.keys():
 
 #for key in most_popular_movies_tweeters.keys():
 
-#Ecount = collections.Counter(most_popular_movies_tweeters[most_popular_movies_tweeters.keys()][0])
 counted_movies = [most_popular_movies_tweeters[key][0] for key in most_popular_movies_tweeters.keys()]
-print (counted_movies)
-count =collections.Counter(counted_movies).most_common()
-print (count[0])
+#print (counted_movies)
+count = collections.Counter(counted_movies).most_common()
+#print (count[0])
 file_summary.write("\n After looking at the most popular tweets about these movies, I wanted to see out of these movies, which one was tweeted about the most (out of the popular tweets)")
 file_summary.write("\n" + count[0][0] + " had the most popular tweets with " + str(count[0][1]) + " tweets."  )
 
@@ -381,7 +380,7 @@ file_summary.close()
 ### IMPORTANT: MAKE SURE TO CLOSE YOUR DATABASE CONNECTION AT THE END OF THE FILE HERE SO YOU DO NOT LOCK YOUR DATABASE (it's fixable, but it's a pain). ###
 conn.close()
 
-
+print ("Please check your folder for a .txt summary output file")
 
 # Put your tests here, with any edits you now need from when you turned them in with your project plan.
 # Write your test cases here.
